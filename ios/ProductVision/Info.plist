@@ -50,5 +50,9 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This allows you to scan barcodes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This allows you to scan barcodes that you've saved to the camera roll.</string>
 </dict>
 </plist>
