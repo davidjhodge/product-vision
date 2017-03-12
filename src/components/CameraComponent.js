@@ -14,7 +14,15 @@ import {
 // View the package on github here:https://github.com/lwansbrough/react-native-camera
 import Camera from 'react-native-camera';
 
+
 class CameraComponent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+
+    };
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -56,5 +64,10 @@ const styles = StyleSheet.create({
     margin: 40
   }
 });
+
+// Specify the types of props this component will recieve (for type checking)
+CameraComponent.propTypes = {
+
+};
 
 export default CameraComponent;
