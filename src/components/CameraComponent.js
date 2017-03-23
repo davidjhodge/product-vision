@@ -22,7 +22,17 @@ class CameraComponent extends Component {
     this.state = {
 
     };
+
+    this.onBarcodeDetection = this.onBarcodeDetection.bind(this);
   }
+
+  onBarcodeDetection(event) {
+    var data = event.data;
+    var bounds = event.bounds;
+
+    console.log("Barcode: " + JSON.stringify(data));
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -30,6 +40,7 @@ class CameraComponent extends Component {
           ref={(cam) => {
             this.camera = cam;
           }}
+          onBarCodeRead={this.onBarcodeDetection}
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill}>
           <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
