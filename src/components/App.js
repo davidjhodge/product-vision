@@ -17,17 +17,18 @@ class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Navigator
-          initialRoute={routes[0]}
-          initialRouteStack={routes}
-          renderScene={(route, navigator) =>
-            <CameraComponent />
-          }
-        />
+        <CameraComponent />
       </View>
     );
   }
 }
+
+// <Navigator
+//   initialRoute={routes[0]}
+//   initialRouteStack={routes}
+//   renderScene={(route, navigator) =>
+//   }
+// />
 
 const styles = StyleSheet.create({
   container: {
