@@ -10,6 +10,7 @@ import SignUpComponent from './SignUpComponent.js';
 import RecentSearchesComponent from './RecentSearchesComponent.js';
 import SettingsComponent from './SettingsComponent.js';
 import RelatedProductsComponent from './RelatedProductsComponent.js';
+import ProductWebComponent from './ProductWebComponent.js';
 
 import Transitions from '../lib/transitions.js';
 
@@ -32,7 +33,11 @@ class App extends Component {
       return <SettingsComponent navigator={navigator} {...route.passProps} />
 
     } else if (route.name === 'RelatedProducts') {
+      
       return <RelatedProductsComponent navigator={navigator} {...route.passProps} />
+    } else if (route.name === 'WebView') {
+
+      return <ProductWebComponent navigator={navigator} {...route.passProps} />
     }
   }
 
