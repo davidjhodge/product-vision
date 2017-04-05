@@ -14,6 +14,11 @@ import ProductWebComponent from './ProductWebComponent.js';
 
 import Transitions from '../lib/transitions.js';
 
+// Initialize Parse
+var Parse = require('parse/react-native');
+Parse.initialize("pqjygx3eAiWlqKGyvD58yDNOhmnb2URbAtjIAajj", "Hk5fRaxZKZYGI58bSWJnTVkEsET0ppWveAEMljIk");
+Parse.serverURL = "https://parseapi.back4app.com/";
+
 class App extends Component {
   // Given a route name, renderScene selects the corresponding component
   renderScene(route, navigator) {
@@ -33,7 +38,7 @@ class App extends Component {
       return <SettingsComponent navigator={navigator} {...route.passProps} />
 
     } else if (route.name === 'RelatedProducts') {
-      
+
       return <RelatedProductsComponent navigator={navigator} {...route.passProps} />
     } else if (route.name === 'WebView') {
 
