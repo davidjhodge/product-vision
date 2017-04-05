@@ -12,6 +12,8 @@ import {
   Button
 } from 'react-native';
 
+// Initialize Parse
+var Parse = require('parse/react-native');
 
 class SignUpComponent extends Component {
   constructor(props) {
@@ -23,6 +25,22 @@ class SignUpComponent extends Component {
   }
 
   signUp() {
+    // Example Parse Query
+    var user = new Parse.User();
+    user.set("username", "test_user");
+    user.set("password", "password");
+    user.set("email", "email@example.com");
+
+    user.signUp(null, {
+      success: function(user) {
+        // Hooray! Let them use the app now.
+      },
+      error: function(user, error) {
+        // Show the error message somewhere and let the user try again.
+        alert("Error: " + error.code + " " + error.message);
+      }
+    });
+
     // TODO
     // 1. Add a route to the renderScene method in App.js
     // 2. Uncomment and call this logic below
