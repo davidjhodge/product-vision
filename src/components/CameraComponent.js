@@ -42,6 +42,11 @@ class CameraComponent extends Component {
     }
   }
 
+  // TEMP
+  dummySearch() {
+    this.executeBarcodeSearch("022000159335")
+  }
+
   executeBarcodeSearch(barcodeId) {
     this.props.navigator.push({
       name: "RelatedProducts",
@@ -101,7 +106,7 @@ class CameraComponent extends Component {
           <TouchableHighlight
             underlayColor="transparent"
             style={styles.capture}
-            onPress={this.takePicture.bind(this) }>
+            onPress={this.dummySearch.bind(this) }>
             <Image
               style={{ height: 72, width: 72 }}
               source={require('../../resources/whiteCircle.png')} />

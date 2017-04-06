@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 ProductComponent.propTypes = {
   id: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
-  price: React.PropTypes.string.isRequired,
+  price: React.PropTypes.string,
   imageUrl: React.PropTypes.string.isRequired,
   outboundUrl: React.PropTypes.string.isRequired,
   onOutboundClick: React.PropTypes.func.isRequired
