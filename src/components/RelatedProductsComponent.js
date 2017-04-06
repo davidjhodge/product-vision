@@ -11,8 +11,12 @@ import {
   ListView
 } from 'react-native';
 
+import NavigationBar from 'react-native-navbar';
+
 import { productLookup } from '../api/products.js';
 import ProductComponent from './ProductComponent.js';
+
+var Parse = require('parse/react-native');
 
 class RelatedProductsComponent extends Component {
   constructor(props) {
@@ -22,7 +26,6 @@ class RelatedProductsComponent extends Component {
     this.state = {
       dataSource: this.ds.cloneWithRows([])
     };
-
   }
 
   componentDidMount() {
@@ -45,6 +48,8 @@ class RelatedProductsComponent extends Component {
         this.setState({
           dataSource: this.ds.cloneWithRows(result)
         });
+        // Upload this to the user's search history
+        this.uploadSearch();
       } else {
         console.log(error);
       }
@@ -61,12 +66,51 @@ class RelatedProductsComponent extends Component {
     });
   }
 
+  // Uploading Search
+  uploadSearch() {
+    const file = { __ContentType: "image/jpeg", base64: this.props.imageData };
+    var parseImageFile = new Parse.File("image.jpg", file);
+
+    //put this inside if {
+    parseImageFile.save().then(function() {
+      // The file has been saved to Parse.
+    }, function(error) {
+      // The file either could not be read, or could not be saved to Parse.
+      console.log(error);
+    });
+
+    // Be sure of ur parameters name
+    // prod is extend of my class in parse from this: var prod = new products();
+
+    var Search = Parse.Object.extend("Search");
+    var search = new Search();
+
+    // User who placed the order
+
+    // search.set("createdBy", Parse.User.current());
+    search.set("createdBy", "j9SLaztlLH");
+    search.set("createdAt", Date.now());
+    search.set("barcodeId", this.props.barcode);
+    search.set("barcodeImage", parseImageFile);
+    search.set("barcodeType", this.props.barcodeType);
+
+    const relatedProducts = this.state.dataSource._dataBlob.s1;
+    search.set("relatedProducts", relatedProducts);
+
+    search.save();
+  }
+
   render() {
+    const leftButtonConfig = {
+      title: 'Back',
+      handler: () => this.back()
+    };
+
     return (
       <View style={styles.container}>
-        <Text style={{ margin: 24 }} onPress={this.back.bind(this)}>Back</Text>
-        <Text>Recent Searches</Text>
-        <Text>{this.props.barcode}</Text>
+        <NavigationBar
+          title={{ title: 'Related Products' }}
+          leftButton={leftButtonConfig} />
         <ListView
           dataSource={this.state.dataSource}
           renderRow={(rowData) => {
@@ -87,12 +131,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgb(244,244,244)',
-    marginTop: 40, //TEMP
   }
 });
 
 RelatedProductsComponent.propTypes = {
   barcode: React.PropTypes.string.isRequired,
+  barcodeType: React.PropTypes.string.isRequired,
+  imageData: React.PropTypes.string.isRequired,
   callback: React.PropTypes.func
 };
 

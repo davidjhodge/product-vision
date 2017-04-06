@@ -21,7 +21,9 @@ class CameraComponent extends Component {
     super(props);
 
     this.state = {
-      barcodeDetected: false
+      barcodeDetected: false,
+      barcodeId: "",
+      barcodeType: "",
     };
 
     this.onBarcodeDetection = this.onBarcodeDetection.bind(this);
@@ -35,23 +37,51 @@ class CameraComponent extends Component {
       });
 
       var barcodeId = event.data;
+      var barcodeType = event.type;
+
+      this.setState({
+        barcodeId: barcodeId,
+        barcodeType: barcodeType,
+      });
+
       console.log("Barcode: " + JSON.stringify(barcodeId));
       // var bounds = event.bounds;
 
-      this.executeBarcodeSearch(barcodeId);
-    }
+      this.takePicture();
+      }
   }
 
-  executeBarcodeSearch(barcodeId) {
+  takePicture() {
+    this.camera.capture({metadata: {}})
+    .then((data) => {
+      const imageData = data.data;
+      this.executeBarcodeSearch(this.state.barcodeId, imageData);
+    })
+    .catch(err => console.error(err));
+  }
+
+  // TEMP
+  dummySearch() {
+    this.onBarcodeDetection({ data: "0022000159342" });
+  }
+
+  executeBarcodeSearch(barcodeId, imageData) {
     this.props.navigator.push({
       name: "RelatedProducts",
       type: "Normal",
       passProps: {
         barcode: barcodeId,
+        barcodeType: this.state.barcodeType,
+        imageData: imageData,
         callback: this.enableBarcodeDetection.bind(this)
       }
     });
-    // Reset detection state
+
+    // Reset state
+    this.setState({
+      barcodeId: "",
+      barcodeType: "",
+    });
   }
 
   enableBarcodeDetection() {
@@ -82,6 +112,7 @@ class CameraComponent extends Component {
             this.camera = cam;
           }}
           onBarCodeRead={this.onBarcodeDetection}
+          captureTarget={Camera.constants.CaptureTarget.memory}
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill}>
           <View style={styles.navButtonsContainer}>
@@ -101,7 +132,7 @@ class CameraComponent extends Component {
           <TouchableHighlight
             underlayColor="transparent"
             style={styles.capture}
-            onPress={this.takePicture.bind(this) }>
+            onPress={this.dummySearch.bind(this) }>
             <Image
               style={{ height: 72, width: 72 }}
               source={require('../../resources/whiteCircle.png')} />
@@ -109,12 +140,6 @@ class CameraComponent extends Component {
         </Camera>
       </View>
     );
-  }
-
-  takePicture() {
-    this.camera.capture()
-      .then((data) => console.log(data))
-      .catch(err => console.error(err));
   }
 }
 
