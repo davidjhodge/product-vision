@@ -11,6 +11,8 @@ import {
   ListView
 } from 'react-native';
 
+import NavigationBar from 'react-native-navbar';
+
 import { productLookup } from '../api/products.js';
 import ProductComponent from './ProductComponent.js';
 
@@ -22,7 +24,6 @@ class RelatedProductsComponent extends Component {
     this.state = {
       dataSource: this.ds.cloneWithRows([])
     };
-
   }
 
   componentDidMount() {
@@ -62,11 +63,16 @@ class RelatedProductsComponent extends Component {
   }
 
   render() {
+    const leftButtonConfig = {
+      title: 'Back',
+      handler: () => this.back()
+    };
+
     return (
       <View style={styles.container}>
-        <Text style={{ margin: 24 }} onPress={this.back.bind(this)}>Back</Text>
-        <Text>Recent Searches</Text>
-        <Text>{this.props.barcode}</Text>
+        <NavigationBar
+          title={{ title: 'Related Products' }}
+          leftButton={leftButtonConfig} />
         <ListView
           dataSource={this.state.dataSource}
           renderRow={(rowData) => {
@@ -87,7 +93,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgb(244,244,244)',
-    marginTop: 40, //TEMP
   }
 });
 
