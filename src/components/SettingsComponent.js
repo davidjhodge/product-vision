@@ -12,9 +12,12 @@ import {
   Button
 } from 'react-native';
 
+var Parse = require('parse/react-native');
+
 class SettingsComponent extends Component {
 
   logout() {
+    Parse.User.logOut();
     this.props.navigator.pop();
 
     this.props.navigator.resetTo({
