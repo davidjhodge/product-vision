@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
   },
   navBar: {
     width: '100%'
+
   }
 });
 

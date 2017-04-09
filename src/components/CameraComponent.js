@@ -120,13 +120,13 @@ class CameraComponent extends Component {
               underlayColor="transparent"
               style={styles.recentSearchesButton}
               onPress={this.showRecentSearches.bind(this)}>
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>Recent</Text>
+              <Text style={styles.leftButtonText}>Recent</Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor="transparent"
               style={styles.settingsButton}
               onPress={this.showSettings.bind(this)}>
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>Settings</Text>
+              <Text style={styles.rightButtonText}>Settings</Text>
             </TouchableHighlight>
           </View>
           <TouchableHighlight
@@ -165,22 +165,31 @@ const styles = StyleSheet.create({
   navButtonsContainer: {
     height: 32,
     flex: 1,
-    flexDirection: 'column',
-    marginTop: 32,
-    marginLeft: 12,
-    marginRight: 12
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 40,
+    marginLeft: 20,
+    marginRight: 20,
   },
   recentSearchesButton: {
-    alignSelf: 'flex-start',
     width: 80,
     height: 30,
     flex: 0,
   },
   settingsButton: {
-    alignSelf: 'flex-end',
     width: 80,
     height: 30,
     flex: 0
+  },
+  leftButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'left'
+  },
+  rightButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'right'
   }
 });
 
