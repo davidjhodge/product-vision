@@ -9,13 +9,24 @@ import {
   TouchableHighlight,
   View,
   TextInput,
-  Button
+  Button,
+  ListView
 } from 'react-native';
 
 var Parse = require('parse/react-native');
 import NavigationBar from 'react-native-navbar';
 
 class SettingsComponent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: this.ds.cloneWithRows([
+        "Logout"
+      ])
+    };
+  }
 
   logout() {
     Parse.User.logOut();
@@ -43,12 +54,20 @@ class SettingsComponent extends Component {
           style={styles.navBar}
           title={{ title: 'Settings' }}
           leftButton={leftButtonConfig} />
-        <TouchableHighlight
-          underlayColor="transparent"
-          style={styles.logout}
-          onPress={this.logout.bind(this)}>
-          <Text>Logout</Text>
-        </TouchableHighlight>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => {
+            return (
+              <TouchableHighlight
+                underlayColor="transparent"
+                style={styles.logout}
+                onPress={this.logout.bind(this)}>
+                <Text style={styles.rowText}>{rowData}</Text>
+              </TouchableHighlight>
+            );
+          }}
+          enableEmptySections={true}
+        />
       </View>
     );
   }
@@ -57,14 +76,21 @@ class SettingsComponent extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'rgb(239,239,244)',
     alignItems: 'center'
   },
   navBar: {
     width: '100%'
   },
   logout: {
-    marginTop: 100,
+    height: 44,
+    width: '100%',
+    backgroundColor: 'white',
+    marginTop: 24,
+  },
+  rowText: {
+    lineHeight: 44,
+    marginLeft: 24
   }
 });
 

@@ -87,8 +87,8 @@ class RelatedProductsComponent extends Component {
 
     // User who placed the order
 
-    // search.set("createdBy", Parse.User.current());
-    search.set("createdBy", "j9SLaztlLH");
+    search.set("owner", Parse.User.current());
+    // search.set("createdBy", "j9SLaztlLH");
     search.set("createdAt", Date.now());
     search.set("barcodeId", this.props.barcode);
     search.set("barcodeImage", parseImageFile);
