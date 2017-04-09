@@ -7,6 +7,8 @@ import {
   WebView
 } from 'react-native';
 
+import NavigationBar from 'react-native-navbar';
+
 class ProductWebComponent extends Component {
 
   back() {
@@ -16,9 +18,17 @@ class ProductWebComponent extends Component {
   render() {
     const { url } = this.props;
 
+    const leftButtonConfig = {
+      title: 'Back',
+      handler: () => this.back()
+    };
+
     return (
       <View style={styles.container}>
-        <Text style={{ margin: 24, marginTop: 40 }} onPress={this.back.bind(this)}>Back</Text>
+        <NavigationBar
+          style={styles.navBar}
+          title={{ title: 'Recent Searches' }}
+          leftButton={leftButtonConfig} />
         <WebView
           source={{ uri: url}}
           style={styles.webView}
@@ -31,6 +41,9 @@ class ProductWebComponent extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  navBar: {
+    width: '100%',
   },
   webView: {
 
