@@ -136,13 +136,11 @@ export async function similarProducts(barcodeId, callback) {
   params.push("AWSAccessKeyId=" + AWSAccessKeyId);
   params.push("AssociateTag=" + AssociateTag);
 
-  params.push("IdType=" + "EAN");
   params.push("ItemId=" + barcodeId);
-
-  params.push("Operation=" + "ItemLookup");
+  params.push("MerchantId=" + "Amazon");
+  params.push("Operation=" + "SimilarityLookup");
   params.push("ResponseGroup=" +encodeURIComponent("Images,ItemAttributes,Offers"));
 
-  params.push("SearchIndex=" + "All");
   params.push("Service=" + "AWSECommerceService");
   params.push("Timestamp=" + encodeURIComponent(date.toISOString()));
   params.push("Version=" + "2011-08-01");
