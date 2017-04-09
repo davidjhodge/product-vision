@@ -36,7 +36,7 @@ class SearchCell extends Component {
           <Text style = {{fontSize: 16, color: '#39393a', marginLeft: 28}}>Barcode Type: {this.props.barcodeType}</Text>
           <Text style = {{fontSize: 12, color: '#898989', marginLeft: 28, marginTop: 10}}>{this.props.barcodeId}</Text>
         </View>
-        <Image source = {require('./chevron.png')} style = {{position: 'absolute', width: 8, height: 13, right:20}}/>
+        <Image source = {require('../../resources/chevron_right.png')} style = {{position: 'absolute', width: 8, height: 13, right:20}}/>
       </View>
     )
   }
