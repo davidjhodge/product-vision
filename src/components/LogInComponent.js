@@ -12,11 +12,13 @@ import {
   Button
 } from 'react-native';
 
+import NavigationBar from 'react-native-navbar';
+
 // Initialize Parse
 var Parse = require('parse/react-native');
 var dims = Dimensions.get('window');
 
-class SignUpComponent extends Component {
+class LogInComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -29,23 +31,16 @@ class SignUpComponent extends Component {
     // });
   }
 
-  signUp() {
-    alert("Email: \n" + this.state.email + "\n\nPassword: \n" + this.state.password);
-    //Example Parse Query
-    var user = new Parse.User();
-    user.set("username", this.state.email);
-    user.set("password", this.state.password);
-    user.set("email", this.state.email);
-
-    user.signUp(null, {
+  logIn() {
+    Parse.User.logIn(this.state.email, this.state.password, {
       success: (user) => {
         this.navigateToCamera();
       },
       error: function(user, error) {
-        // Show the error message somewhere and let the user try again.
-        alert("Error: " + error.code + " " + error.message);
+        alert("Login failed, username or password is incorrect.\nUsername: " + this.state.email + "\nPassword: " + this.state.password);
       }
     });
+    };
 
     // TODO
     // 1. Add a route to the renderScene method in App.js
@@ -57,7 +52,7 @@ class SignUpComponent extends Component {
     //     // If you needed to pass props, they would go here
     //   }
     // });
-  }
+
 
   navigateToCamera() {
     // Navigator is passed in as a prop in the App.js component
@@ -67,24 +62,21 @@ class SignUpComponent extends Component {
     });
   }
 
-  navigateToLogin() {
-    this.props.navigator.push({
-      name: 'Login',
-      type: 'None'
-    })
+  cancel() {
+    this.props.navigator.pop();
   }
 
   render() {
+    const leftButtonConfig = {
+      title: 'Cancel',
+      handler: () => this.cancel()
+    };
     return (
       <View>
-      <View style = {styles.titleBox}>
-        <Text style = {styles.titleText}>
-          ProductVision
-        </Text>
-        <Text style = {styles.subtitleText}>
-          Find products by scanning barcodes.
-        </Text>
-      </View>
+      <NavigationBar
+        style={styles.navBar}
+        title={{ title: 'Login' }}
+        leftButton={leftButtonConfig} />
         <TextInput
           id = 'Email'
           style={styles.loginInput}
@@ -100,24 +92,9 @@ class SignUpComponent extends Component {
           value = {this.state.password}/>
           <TouchableHighlight
             style = {styles.signUpButton}
-            onPress={this.signUp.bind(this)}>
-            <Text style = {styles.signUpButtonText}>Sign Up</Text>
+            onPress={this.logIn.bind(this)}>
+            <Text style = {styles.signUpButtonText}>Sign in</Text>
           </TouchableHighlight>
-          <Button
-            title="Complete Login"
-            onPress={this.navigateToCamera.bind(this)}>
-          </Button>
-      <TouchableHighlight
-        style = {styles.existingLoginButton}
-        onPress = {this.navigateToLogin.bind(this)}>
-        <Text style = {styles.existingLoginButtonText}>Login to an existing account</Text>
-      </TouchableHighlight>
-      <TouchableHighlight
-        style = {styles.facebookConnectButton}
-        onPress = {this.navigateToCamera.bind(this)}>
-        <Text style = {styles.facebookConnectButtonText}>Connect with Facebook</Text>
-      </TouchableHighlight>
-      <Text style = {styles.termsText}>By signing up, you agree to our terms</Text>
       </View>
 
     );
@@ -205,7 +182,10 @@ facebookConnectButtonText: {
 termsText: {
   color: '#9b9b9b',
   textAlign: 'center',
+},
+navBar: {
+  width: '100%'
 }
 });
 
-export default SignUpComponent;
+export default LogInComponent;

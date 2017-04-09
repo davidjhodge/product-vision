@@ -11,6 +11,7 @@ import RecentSearchesComponent from './RecentSearchesComponent.js';
 import SettingsComponent from './SettingsComponent.js';
 import RelatedProductsComponent from './RelatedProductsComponent.js';
 import ProductWebComponent from './ProductWebComponent.js';
+import LogInComponent from './LogInComponent.js';
 
 import Transitions from '../lib/transitions.js';
 
@@ -22,7 +23,7 @@ Parse.serverURL = "https://parseapi.back4app.com/";
 class App extends Component {
   // Given a route name, renderScene selects the corresponding component
   renderScene(route, navigator) {
-    if (route.name === 'Login') {
+    if (route.name === 'Signup') {
       // Pass navigtor prop AND any props contained in the route.passProps field
       // ... is called the spread operator. It means you pass all props in the given object
       // down to the child
@@ -43,6 +44,9 @@ class App extends Component {
     } else if (route.name === 'WebView') {
 
       return <ProductWebComponent navigator={navigator} {...route.passProps} />
+    } else if (route.name === 'Login') {
+
+      return <LogInComponent navigator={navigator} {...route.passProps} />
     }
   }
 
@@ -63,7 +67,7 @@ class App extends Component {
       <View style={styles.container}>
         <Navigator
           style={{ flex: 1 }}
-          initialRoute={{name: 'Login', index: 0}}
+          initialRoute={{name: 'Signup', index: 0}}
           renderScene={this.renderScene.bind(this)}
           configureScene={this.configureScene.bind(this)}
           />
