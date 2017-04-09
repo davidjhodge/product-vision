@@ -22,7 +22,7 @@ class SettingsComponent extends Component {
     this.props.navigator.pop();
 
     this.props.navigator.resetTo({
-      name: 'Login',
+      name: 'Signup',
       type: 'None'
     })
   }
