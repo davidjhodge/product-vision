@@ -27,7 +27,7 @@ class ProductWebComponent extends Component {
       <View style={styles.container}>
         <NavigationBar
           style={styles.navBar}
-          title={{ title: 'Recent Searches' }}
+          title={{ title: 'Product Webpage' }}
           leftButton={leftButtonConfig} />
         <WebView
           source={{ uri: url}}
