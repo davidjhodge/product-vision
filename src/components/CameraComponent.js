@@ -73,7 +73,8 @@ class CameraComponent extends Component {
         barcode: barcodeId,
         barcodeType: this.state.barcodeType,
         imageData: imageData,
-        callback: this.enableBarcodeDetection.bind(this)
+        callback: this.enableBarcodeDetection.bind(this),
+        isNew: true,
       }
     });
 

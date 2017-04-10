@@ -18,29 +18,32 @@ import NavigationBar from 'react-native-navbar';
 var Parse = require('parse/react-native');
 var dims = Dimensions.get('window');
 
-Parse.initialize("pqjygx3eAiWlqKGyvD58yDNOhmnb2URbAtjIAajj", "Hk5fRaxZKZYGI58bSWJnTVkEsET0ppWveAEMljIk");
-Parse.serverURL = "https://parseapi.back4app.com/";
+// Parse.initialize("pqjygx3eAiWlqKGyvD58yDNOhmnb2URbAtjIAajj", "Hk5fRaxZKZYGI58bSWJnTVkEsET0ppWveAEMljIk");
+// Parse.serverURL = "https://parseapi.back4app.com/";
 //SearchCell.defaultProps = {}
 class SearchCell extends Component {
-  props: {
-    barcodeImage: File;
-    barcodeId: String;
-    barcodeType: String;
-  };
-
   render() {
+    const barcodeId = this.props.barcodeId;
     return(
-      <View style = {{width: '100%', borderColor: 'red', borderWidth: 1, flexDirection: 'row', alignItems:'center'}}>
-        <Image source = {{uri: this.props.barcodeImage._url}} style = {{height: 80, width:60, margin: 16, marginLeft:34, borderColor: 'black', borderWidth: 1}}></Image>
-        <View style = {{flexDirection:'column'}}>
-          <Text style = {{fontSize: 16, color: '#39393a', marginLeft: 28}}>Barcode Type: {this.props.barcodeType}</Text>
-          <Text style = {{fontSize: 12, color: '#898989', marginLeft: 28, marginTop: 10}}>{this.props.barcodeId}</Text>
+      <TouchableHighlight onPress={() => this.props.showDetailPage(barcodeId)}>
+        <View style = {{width: '100%', borderColor: 'red', borderWidth: 1, flexDirection: 'row', alignItems:'center'}}>
+          <Image source = {{uri: this.props.barcodeImageUrl}} style = {{height: 80, width:60, margin: 16, marginLeft:34, borderColor: 'black', borderWidth: 1}}></Image>
+          <View style = {{flexDirection:'column'}}>
+            <Text style = {{fontSize: 16, color: '#39393a', marginLeft: 28, paddingRight: 40}}>Barcode Type: {this.props.barcodeType}</Text>
+            <Text style = {{fontSize: 12, color: '#898989', marginLeft: 28, marginTop: 10}}>{this.props.barcodeId}</Text>
+          </View>
+          <Image source = {require('../../resources/chevron_right.png')} style = {{position: 'absolute', width: 8, height: 13, right:20}}/>
         </View>
-        <Image source = {require('../../resources/chevron_right.png')} style = {{position: 'absolute', width: 8, height: 13, right:20}}/>
-      </View>
+      </TouchableHighlight>
     )
   }
 }
+
+SearchCell.propTypes = {
+  barcodeImageUrl: React.PropTypes.string.isRequired,
+  barcodeId: React.PropTypes.string.isRequired,
+  barcodeType: React.PropTypes.string.isRequired,
+};
 
 class RecentSearchesComponent extends Component {
 
@@ -55,7 +58,6 @@ class RecentSearchesComponent extends Component {
 
   componentDidMount() {
     this.loadRecentSearches();
-
   }
 
   loadRecentSearches() {
@@ -63,19 +65,30 @@ class RecentSearchesComponent extends Component {
     var Search = Parse.Object.extend("Search");
     var query = new Parse.Query(Search);
     query.find().then((objs) => {
-      for(var i = 0; i < objs.length; i++){
+      objs.forEach((object) => {
         parsedata.push({
-          barcodeId: objs[i].get("barcodeId"),
-          barcodeImage: objs[i].get("barcodeImage"),
-          barcodeType: objs[i].get("barcodeType"),
+          barcodeId: object.get("barcodeId"),
+          barcodeImageUrl: object.get("barcodeImage")._url,
+          barcodeType: object.get("barcodeType"),
           //eventually get user info
-          id: objs[i].id,
-        })
-      }
+          id: object.id,
+        });
+      });
       this.setState({
         searches: parsedata,
       });
     })
+  }
+
+  showDetailPage(barcodeId) {
+    this.props.navigator.push({
+      name: "RelatedProducts",
+      type: "Normal",
+      passProps: {
+        barcode: barcodeId,
+        isNew: false,
+      }
+    });
   }
 
   done() {
@@ -90,9 +103,10 @@ class RecentSearchesComponent extends Component {
     const list = this.state.searches.map(
         (search, index) => <SearchCell
           key = {index}
-          barcodeImage = {search.barcodeImage}
+          barcodeImageUrl = {search.barcodeImageUrl}
           barcodeType = {search.barcodeType}
           barcodeId = {search.barcodeId}
+          showDetailPage = {this.showDetailPage.bind(this)}
         />
       );
     //console.log(this.state.searches[0].barcodeId);
@@ -116,7 +130,6 @@ const styles = StyleSheet.create({
   },
   navBar: {
     width: '100%'
-
   }
 });
 

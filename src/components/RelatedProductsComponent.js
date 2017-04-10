@@ -34,7 +34,9 @@ class RelatedProductsComponent extends Component {
 
   back() {
     // Re-enable barcode Scanner
-    this.props.callback();
+    if (this.props.isNew) {
+      this.props.callback();
+    }
     this.props.navigator.pop();
   }
 
@@ -49,7 +51,9 @@ class RelatedProductsComponent extends Component {
           dataSource: this.ds.cloneWithRows(result)
         });
         // Upload this to the user's search history
-        this.uploadSearch();
+        if (this.props.isNew) {
+          this.uploadSearch();
+        }
       } else {
         console.log(error);
       }
@@ -136,9 +140,10 @@ const styles = StyleSheet.create({
 
 RelatedProductsComponent.propTypes = {
   barcode: React.PropTypes.string.isRequired,
-  barcodeType: React.PropTypes.string.isRequired,
-  imageData: React.PropTypes.string.isRequired,
-  callback: React.PropTypes.func
+  barcodeType: React.PropTypes.string,
+  imageData: React.PropTypes.string,
+  callback: React.PropTypes.func,
+  isNew: React.PropTypes.bool.isRequired,
 };
 
 export default RelatedProductsComponent;
