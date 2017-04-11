@@ -10,7 +10,8 @@ import {
   View,
   TextInput,
   Button,
-  ListView
+  ListView,
+  PixelRatio
 } from 'react-native';
 
 var Parse = require('parse/react-native');
@@ -86,10 +87,14 @@ const styles = StyleSheet.create({
     height: 44,
     width: '100%',
     backgroundColor: 'white',
-    marginTop: 24,
+    marginTop: 32,
+    borderBottomColor: '#c8c8c8',
+    borderBottomWidth: 1 / PixelRatio.get(),
+    borderTopColor: '#c8c8c8',
+    borderTopWidth: 1 / PixelRatio.get(),
   },
   rowText: {
-    lineHeight: 44,
+    lineHeight: 43,
     marginLeft: 24
   }
 });

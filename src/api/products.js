@@ -124,9 +124,9 @@ export async function productLookup(barcodeId, callback) {
   });
 }
 
-export async function similarProducts(barcodeId, callback) {
-  if (typeof barcodeId !== 'string') {
-    callback("Similar Products: Barcode is not a string.", null);
+export async function similarProducts(amazonId, callback) {
+  if (typeof amazonId !== 'string') {
+    callback("Similar Products: Amazon Id is not a string.", null);
     return;
   }
 
@@ -136,7 +136,7 @@ export async function similarProducts(barcodeId, callback) {
   params.push("AWSAccessKeyId=" + AWSAccessKeyId);
   params.push("AssociateTag=" + AssociateTag);
 
-  params.push("ItemId=" + barcodeId);
+  params.push("ItemId=" + amazonId);
   params.push("MerchantId=" + "Amazon");
   params.push("Operation=" + "SimilarityLookup");
   params.push("ResponseGroup=" +encodeURIComponent("Images,ItemAttributes,Offers"));
@@ -171,7 +171,7 @@ export async function similarProducts(barcodeId, callback) {
         if (jsonResponse) {
           var simpleItems = [];
 
-          const items = get(jsonResponse,'ItemLookupResponse.Items[0].Item');
+          const items = get(jsonResponse,'SimilarityLookupResponse.Items[0].Item');
           if (items && items != 'undefined') {
             // Response exists
             items.forEach(function(item) {
@@ -199,6 +199,7 @@ export async function similarProducts(barcodeId, callback) {
             });
           } else {
             callback("Items field in response was undefined", null);
+            return;
           }
 
           // This is the result of a successful request
