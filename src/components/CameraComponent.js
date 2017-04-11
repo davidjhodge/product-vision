@@ -60,11 +60,6 @@ class CameraComponent extends Component {
     .catch(err => console.error(err));
   }
 
-  // TEMP
-  dummySearch() {
-    this.onBarcodeDetection({ data: "0022000159342" });
-  }
-
   executeBarcodeSearch(barcodeId, imageData) {
     this.props.navigator.push({
       name: "RelatedProducts",
@@ -130,14 +125,7 @@ class CameraComponent extends Component {
               <Text style={styles.rightButtonText}>Settings</Text>
             </TouchableHighlight>
           </View>
-          <TouchableHighlight
-            underlayColor="transparent"
-            style={styles.capture}
-            onPress={this.dummySearch.bind(this) }>
-            <Image
-              style={{ height: 72, width: 72 }}
-              source={require('../../resources/whiteCircle.png')} />
-          </TouchableHighlight>
+          <Text style={styles.capture}>Point the camera at a barcode!</Text>
         </Camera>
       </View>
     );
@@ -158,10 +146,14 @@ const styles = StyleSheet.create({
     flex: 0,
     padding: 10,
     margin: 40,
-    width: 72,
-    height: 72,
+    width: '100%',
+    height: 30,
+    marginBottom: 30,
     alignSelf: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    color: 'white',
+    // fontWeight: 'bold',
+    textAlign: 'center'
   },
   navButtonsContainer: {
     height: 32,

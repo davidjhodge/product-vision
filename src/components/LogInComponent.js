@@ -26,9 +26,6 @@ class LogInComponent extends Component {
       email: "",
       password: "",
     };
-    // this.setState({
-    //   username: "Jimmy"
-    // });
   }
 
   logIn() {
@@ -40,19 +37,7 @@ class LogInComponent extends Component {
         alert("Login failed, username or password is incorrect.\nUsername: " + this.state.email + "\nPassword: " + this.state.password);
       }
     });
-    };
-
-    // TODO
-    // 1. Add a route to the renderScene method in App.js
-    // 2. Uncomment and call this logic below
-    // this.props.navigator.push({
-    //   name: 'WhateverYourRouteIsCalled',
-    //   type: 'Modal', // Animation type. Could also be 'Normal' or 'None'
-    //   passProps: {
-    //     // If you needed to pass props, they would go here
-    //   }
-    // });
-
+  };
 
   navigateToCamera() {
     // Navigator is passed in as a prop in the App.js component
@@ -69,16 +54,21 @@ class LogInComponent extends Component {
   render() {
     const leftButtonConfig = {
       title: 'Cancel',
+      tintColor: "white",
       handler: () => this.cancel()
     };
     return (
-      <View>
-      <NavigationBar
-        style={styles.navBar}
-        title={{ title: 'Login' }}
-        leftButton={leftButtonConfig} />
+      <View style={styles.container}>
+        <NavigationBar
+          style={styles.navBar}
+          title={{ title: 'Login', tintColor: "white" }}
+          statusBar={{ style: "light-content" }}
+          tintColor="#8ec5fc"
+          leftButton={leftButtonConfig} />
         <TextInput
           id = 'Email'
+          autoCapitalize='none'
+          autoCorrect={false}
           style={styles.loginInput}
           placeholder = 'Email'
           onChangeText = {(email) => this.setState({email})}
@@ -92,13 +82,13 @@ class LogInComponent extends Component {
           value = {this.state.password}/>
           <TouchableHighlight
             style = {styles.signUpButton}
+            underlayColor="#AAAAAA"
             onPress={this.logIn.bind(this)}>
             <Text style = {styles.signUpButtonText}>Sign in</Text>
           </TouchableHighlight>
-      </View>
-
-    );
-  }
+        </View>
+      );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -106,86 +96,35 @@ const styles = StyleSheet.create({
   flex: 1,
   alignItems: 'center',
   //justifyContent: 'center',
-  backgroundColor: '#ecf0f1',
-},
-titleBox: {
-  height: 242,
-  width: '100%',
-  backgroundColor: '#8ec5fc',
-  justifyContent: 'center',
-},
-titleText: {
-  fontSize: 24,
-  textAlign: 'center',
-  color: '#ffffff',
-  fontWeight: '600',
-  letterSpacing: -0.4,
-},
-subtitleText: {
-  fontSize: 16,
-  textAlign: 'center',
-  color: '#ffffff',
-  letterSpacing: -0.4,
-},
-loginInput: {
-  height: 48,
-  width: '100%',
-  paddingLeft: 24,
-  fontSize: 16,
-  fontWeight: '600',
-  letterSpacing: -0.4,
-  color: '#898989',
-},
-signUpButton: {
-  height: 48,
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: dims.width - 48,
-  backgroundColor: '#c8c8c8',
-  marginLeft: 24,
-  borderRadius: 4,
-  marginTop: 16,
-},
-signUpButtonText: {
-  color: '#ffffff',
-  fontSize: 20,
-  fontWeight: '600',
-  letterSpacing: -0.4,
-},
-existingLoginButton: {
-  backgroundColor: 'rgba(0,0,0,0)',
-  marginTop: 16,
-  marginBottom: 116,
-  alignItems: 'center',
-},
-existingLoginButtonText: {
-  color: '#72acfd',
-  fontSize: 14,
-  fontWeight: '600',
-  letterSpacing: -0.4,
-},
-facebookConnectButton: {
-  backgroundColor: '#3b5998',
-  borderRadius: 4,
-  width: dims.width - 48,
-  marginLeft: 24,
-  height: 48,
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginBottom: 24,
-},
-facebookConnectButtonText: {
-  color: '#ffffff',
-  fontSize: 20,
-  fontWeight: '600',
-},
-termsText: {
-  color: '#9b9b9b',
-  textAlign: 'center',
-},
-navBar: {
-  width: '100%'
-}
+  backgroundColor: 'white',
+  },
+  loginInput: {
+    height: 48,
+    width: '100%',
+    paddingLeft: 24,
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: -0.4,
+    color: '#898989',
+  },
+  signUpButton: {
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: dims.width - 48,
+    backgroundColor: '#c8c8c8',
+    borderRadius: 4,
+    marginTop: 16,
+  },
+  signUpButtonText: {
+    color: '#ffffff',
+    fontSize: 20,
+    fontWeight: '600',
+    letterSpacing: -0.4,
+  },
+  navBar: {
+    width: '100%'
+  }
 });
 
 export default LogInComponent;

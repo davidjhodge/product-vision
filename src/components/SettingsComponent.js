@@ -46,6 +46,7 @@ class SettingsComponent extends Component {
   render() {
     const leftButtonConfig = {
       title: 'Cancel',
+      tintColor: "white",
       handler: () => this.cancel()
     };
 
@@ -53,14 +54,16 @@ class SettingsComponent extends Component {
       <View style={styles.container}>
         <NavigationBar
           style={styles.navBar}
-          title={{ title: 'Settings' }}
+          title={{ title: 'Settings', tintColor: "white" }}
+          statusBar={{ style: "light-content" }}
+          tintColor="#8ec5fc"
           leftButton={leftButtonConfig} />
         <ListView
           dataSource={this.state.dataSource}
           renderRow={(rowData) => {
             return (
               <TouchableHighlight
-                underlayColor="transparent"
+                underlayColor="#c8c8c8"
                 style={styles.logout}
                 onPress={this.logout.bind(this)}>
                 <Text style={styles.rowText}>{rowData}</Text>

@@ -9,7 +9,7 @@ import {
   TouchableHighlight,
   View,
   TextInput,
-  Button
+  Button,
 } from 'react-native';
 
 // Initialize Parse
@@ -24,9 +24,6 @@ class SignUpComponent extends Component {
       email: "",
       password: "",
     };
-    // this.setState({
-    //   username: "Jimmy"
-    // });
   }
 
   signUp() {
@@ -46,17 +43,6 @@ class SignUpComponent extends Component {
         alert("Error: " + error.code + " " + error.message);
       }
     });
-
-    // TODO
-    // 1. Add a route to the renderScene method in App.js
-    // 2. Uncomment and call this logic below
-    // this.props.navigator.push({
-    //   name: 'WhateverYourRouteIsCalled',
-    //   type: 'Modal', // Animation type. Could also be 'Normal' or 'None'
-    //   passProps: {
-    //     // If you needed to pass props, they would go here
-    //   }
-    // });
   }
 
   navigateToCamera() {
@@ -70,23 +56,25 @@ class SignUpComponent extends Component {
   navigateToLogin() {
     this.props.navigator.push({
       name: 'Login',
-      type: 'None'
+      type: 'Modal'
     })
   }
 
   render() {
     return (
       <View>
-      <View style = {styles.titleBox}>
-        <Text style = {styles.titleText}>
-          ProductVision
-        </Text>
-        <Text style = {styles.subtitleText}>
-          Find products by scanning barcodes.
-        </Text>
-      </View>
+        <View style = {styles.titleBox}>
+          <Text style = {styles.titleText}>
+            ProductVision
+          </Text>
+          <Text style = {styles.subtitleText}>
+            Find products by scanning barcodes.
+          </Text>
+        </View>
         <TextInput
           id = 'Email'
+          autoCapitalize='none'
+          autoCorrect={false}
           style={styles.loginInput}
           placeholder = 'Email'
           onChangeText = {(email) => this.setState({email})}
@@ -100,28 +88,26 @@ class SignUpComponent extends Component {
           value = {this.state.password}/>
           <TouchableHighlight
             style = {styles.signUpButton}
+            underlayColor="#AAAAAA"
             onPress={this.signUp.bind(this)}>
             <Text style = {styles.signUpButtonText}>Sign Up</Text>
           </TouchableHighlight>
-          <Button
-            title="Complete Login"
-            onPress={this.navigateToCamera.bind(this)}>
-          </Button>
-      <TouchableHighlight
-        style = {styles.existingLoginButton}
-        onPress = {this.navigateToLogin.bind(this)}>
-        <Text style = {styles.existingLoginButtonText}>Login to an existing account</Text>
-      </TouchableHighlight>
-      <TouchableHighlight
-        style = {styles.facebookConnectButton}
-        onPress = {this.navigateToCamera.bind(this)}>
-        <Text style = {styles.facebookConnectButtonText}>Connect with Facebook</Text>
-      </TouchableHighlight>
-      <Text style = {styles.termsText}>By signing up, you agree to our terms</Text>
-      </View>
-
-    );
-  }
+          <TouchableHighlight
+            style = {styles.existingLoginButton}
+            underlayColor="transparent"
+            onPress = {this.navigateToLogin.bind(this)}>
+            <Text style = {styles.existingLoginButtonText}>Login to an existing account</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style = {styles.facebookConnectButton}
+            underlayColor="#2C457B"
+            onPress = {this.navigateToCamera.bind(this)}>
+            <Text style = {styles.facebookConnectButtonText}>Connect with Facebook</Text>
+          </TouchableHighlight>
+          <Text style = {styles.termsText}>By signing up, you agree to our terms</Text>
+        </View>
+      );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -157,7 +143,7 @@ loginInput: {
   fontSize: 16,
   fontWeight: '600',
   letterSpacing: -0.4,
-  color: '#898989',
+  color: '#898989'
 },
 signUpButton: {
   height: 48,
