@@ -15,6 +15,7 @@
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-linear-gradient": "^2.0.0",
     "react-native-navbar": "^1.7.1",
+    "react-native-push-notification": "^2.2.1",
     "react-native-xml2js": "^1.0.2",
     "react-navigation": "^1.0.0-beta.7",
     "xml2js": "^0.4.17"
