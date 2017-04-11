@@ -129,6 +129,7 @@ titleText: {
   color: '#ffffff',
   fontWeight: '600',
   letterSpacing: -0.4,
+  marginBottom: 12
 },
 subtitleText: {
   fontSize: 16,

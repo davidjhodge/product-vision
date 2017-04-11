@@ -20,6 +20,14 @@ var Parse = require('parse/react-native');
 Parse.initialize("pqjygx3eAiWlqKGyvD58yDNOhmnb2URbAtjIAajj", "Hk5fRaxZKZYGI58bSWJnTVkEsET0ppWveAEMljIk");
 Parse.serverURL = "https://parseapi.back4app.com/";
 
+// Push Notifications
+// var PushNotification = require('react-native-push-notification');
+// import PushNotification from 'react-native-push-notification';
+// PushNotification.localNotificationSchedule({
+//   message: "My Notification Message", // (required)
+//   date: new Date(Date.now() + (5)) // in 60 secs
+// });
+
 class App extends Component {
   // Given a route name, renderScene selects the corresponding component
   renderScene(route, navigator) {
