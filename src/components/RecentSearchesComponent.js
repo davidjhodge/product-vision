@@ -42,21 +42,21 @@ class RecentSearchesComponent extends Component {
     var query = new Parse.Query(Search);
     query.find().then((objs) => {
       objs.forEach((object) => {
+        if(object.get("owner").id === Parse.User.current().id){
+          // If relatedProducts exists, extract the title of the first product
+          const relatedProducts = object.get("relatedProducts");
+          const productTitle = (relatedProducts !== undefined && relatedProducts.length > 0) ?
+            relatedProducts[0].title
+            :
+            "";
 
-        // If relatedProducts exists, extract the title of the first product
-        const relatedProducts = object.get("relatedProducts");
-        const productTitle = (relatedProducts !== undefined && relatedProducts.length > 0) ?
-          relatedProducts[0].title
-          :
-          "";
-
-        parsedata.push({
-          barcodeId: object.get("barcodeId"),
-          barcodeImageUrl: object.get("barcodeImage")._url,
-          relatedProductTitle: productTitle,
-          //eventually get user info
-          id: object.id,
-        });
+          parsedata.push({
+            barcodeId: object.get("barcodeId"),
+            barcodeImageUrl: object.get("barcodeImage")._url,
+            relatedProductTitle: productTitle,
+            id: object.id,
+          });
+        }
       });
       this.setState({
         searches: parsedata,
