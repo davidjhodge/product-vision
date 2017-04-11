@@ -106,11 +106,10 @@ class RelatedProductsComponent extends Component {
 
     var Search = Parse.Object.extend("Search");
     var search = new Search();
-
-    // User who placed the order
+    // Permissions
+    search.setACL(new Parse.ACL(Parse.User.current()));
 
     search.set("owner", Parse.User.current());
-    // search.set("createdBy", "j9SLaztlLH");
     search.set("createdAt", Date.now());
     search.set("barcodeId", this.props.barcode);
     search.set("barcodeImage", parseImageFile);
