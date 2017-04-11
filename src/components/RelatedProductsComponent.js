@@ -13,7 +13,7 @@ import {
 
 import NavigationBar from 'react-native-navbar';
 
-import { productLookup } from '../api/products.js';
+import { productLookup, similarProducts } from '../api/products.js';
 import ProductComponent from './ProductComponent.js';
 
 var Parse = require('parse/react-native');
@@ -42,17 +42,35 @@ class RelatedProductsComponent extends Component {
 
   searchProducts(barcode) {
     // Search Amazon for this barcode
-    productLookup(barcode, (error, result) => {
+    productLookup(barcode, (error, results) => {
       if (!error) {
         // Success
         // State is used here temporarily. Ideally, props should be passed in
         // from a container component
         this.setState({
-          dataSource: this.ds.cloneWithRows(result)
+          dataSource: this.ds.cloneWithRows(results)
         });
         // Upload this to the user's search history
         if (this.props.isNew) {
           this.uploadSearch();
+        }
+        // Load similar products
+        if (results && results.length > 0) {
+          const amazonId = results[0].id;
+          similarProducts(amazonId, (error, results) => {
+            if (!error) {
+              if (results && results.length > 0) {
+                var products = this.state.dataSource._dataBlob.s1;
+                // Append new products to existing results
+                Array.prototype.push.apply(products, results);
+              }
+              this.setState({
+                dataSource: this.ds.cloneWithRows(products)
+              });
+            } else {
+              console.log(error);
+            }
+          });
         }
       } else {
         console.log(error);

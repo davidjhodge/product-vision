@@ -5,6 +5,7 @@ import {
   TouchableHighlight,
   View,
   Image,
+  PixelRatio,
 } from 'react-native';
 
 class ProductComponent extends Component {
@@ -38,6 +39,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    borderBottomColor: '#c8c8c8',
+    borderBottomWidth: 1 / PixelRatio.get()
   },
   image: {
     height: 80,
