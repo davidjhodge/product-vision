@@ -15,7 +15,6 @@ import {
 // View the package on github here:https://github.com/lwansbrough/react-native-camera
 import Camera from 'react-native-camera';
 
-
 class CameraComponent extends Component {
   constructor(props) {
     super(props);
