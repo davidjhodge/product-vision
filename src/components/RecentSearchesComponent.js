@@ -80,8 +80,9 @@ class RecentSearchesComponent extends Component {
   }
 
   render() {
-    const rightButtonConfig = {
+    const leftButtonConfig = {
       title: 'Done',
+      tintColor: "white",
       handler: () => this.done()
     };
     const list = this.state.searches.map(
@@ -98,8 +99,10 @@ class RecentSearchesComponent extends Component {
       <View style={styles.container}>
         <NavigationBar
           style={styles.navBar}
-          title={{ title: 'Recent Searches' }}
-          rightButton={rightButtonConfig} />
+          title={{ title: 'Recent Searches', tintColor: "white" }}
+          statusBar={{ style: "light-content" }}
+          tintColor="#8ec5fc"
+          leftButton={leftButtonConfig} />
         <ScrollView style={styles.container}>
           {list}
         </ScrollView>

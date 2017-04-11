@@ -125,13 +125,16 @@ class RelatedProductsComponent extends Component {
   render() {
     const leftButtonConfig = {
       title: 'Back',
+      tintColor: "white",
       handler: () => this.back()
     };
 
     return (
       <View style={styles.container}>
         <NavigationBar
-          title={{ title: 'Related Products' }}
+          title={{ title: 'Related Products', tintColor: "white" }}
+          statusBar={{ style: "light-content" }}
+          tintColor="#8ec5fc"
           leftButton={leftButtonConfig} />
         <ListView
           dataSource={this.state.dataSource}

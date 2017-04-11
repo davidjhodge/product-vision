@@ -22,9 +22,12 @@ class ProductComponent extends Component {
         <View style={styles.container}>
           <Image style={styles.image} source={{uri: imageUrl}}/>
           <View style={styles.metaContainer}>
-            <Text style={styles.title}>{title}</Text>
+            <Text
+              style={styles.title}
+              numberOfLines={2}>{title}</Text>
             <Text style={styles.price}>{price}</Text>
           </View>
+          <Image source = {require('../../resources/chevron_right.png')} style={styles.chevron}/>
         </View>
       </TouchableHighlight>
     );
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
   metaContainer: {
     flex: 1,
     marginLeft: 24,
-    marginRight: 24
+    marginRight: 32
   },
   title: {
     color: '#4A4A4A',
@@ -61,6 +64,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginTop: 12
+  },
+  chevron: {
+    position: 'absolute',
+    width: 8,
+    height: 13,
+    right: 20
   }
 });
 

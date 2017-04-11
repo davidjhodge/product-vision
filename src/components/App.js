@@ -63,11 +63,18 @@ class App extends Component {
   }
 
   render() {
+    // var initialRoute = {};
+    // if (Parse.User.current() !== null) {
+    //   initialRoute = {name: 'Camera'};
+    // } else {
+      initialRoute = {name: 'Signup'};
+    // }
+
     return (
       <View style={styles.container}>
         <Navigator
           style={{ flex: 1 }}
-          initialRoute={{name: 'Signup', index: 0}}
+          initialRoute={initialRoute}
           renderScene={this.renderScene.bind(this)}
           configureScene={this.configureScene.bind(this)}
           />
