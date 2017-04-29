@@ -18,6 +18,8 @@ import ProductComponent from './ProductComponent.js';
 
 var Parse = require('parse/react-native');
 
+import { scheduleNotification } from '../api/push.js';
+
 class RelatedProductsComponent extends Component {
   constructor(props) {
     super(props);
@@ -106,11 +108,10 @@ class RelatedProductsComponent extends Component {
 
     var Search = Parse.Object.extend("Search");
     var search = new Search();
-
-    // User who placed the order
+    // Permissions
+    search.setACL(new Parse.ACL(Parse.User.current()));
 
     search.set("owner", Parse.User.current());
-    // search.set("createdBy", "j9SLaztlLH");
     search.set("createdAt", Date.now());
     search.set("barcodeId", this.props.barcode);
     search.set("barcodeImage", parseImageFile);
@@ -120,6 +121,12 @@ class RelatedProductsComponent extends Component {
     search.set("relatedProducts", relatedProducts);
 
     search.save();
+
+    // Schedule Push Notification Reminder about this product
+    if (relatedProducts && relatedProducts.length > 0) {
+      const firstProductTitle = relatedProducts[0].title;
+      scheduleNotification(firstProductTitle);
+    }
   }
 
   render() {

@@ -117,7 +117,7 @@ class SignUpComponent extends Component {
             <Text style = {styles.facebookConnectButtonText}>Connect with Facebook</Text>
           </TouchableHighlight>
           <LoginButton
-          publishPermissions={["public_profile"]}
+          publishPermissions={["publish_action"]}
           onLoginFinished={
             (error, result) => {
               if (error) {

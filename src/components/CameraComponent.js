@@ -8,12 +8,23 @@ import {
   Text,
   TouchableHighlight,
   View,
-  Image
+  Image,
+  Platform,
 } from 'react-native';
 // This is the third party module being used for the camera.
 // It was installed via npm.
 // View the package on github here:https://github.com/lwansbrough/react-native-camera
 import Camera from 'react-native-camera';
+
+// Push Notifications
+// var PushNotification = require('react-native-push-notification');
+import PushNotification from 'react-native-push-notification';
+// PushNotification.localNotificationSchedule({
+//   message: "My Notification Message", // (required)
+//   date: new Date(Date.now() + (5 * 1000)) // in 60 secs
+// });
+
+import { registerPushInstallation } from '../api/push.js';
 
 
 class CameraComponent extends Component {
@@ -27,6 +38,8 @@ class CameraComponent extends Component {
     };
 
     this.onBarcodeDetection = this.onBarcodeDetection.bind(this);
+
+    this.registerPushNotifications();
   }
 
   onBarcodeDetection(event) {
@@ -45,10 +58,56 @@ class CameraComponent extends Component {
       });
 
       console.log("Barcode: " + JSON.stringify(barcodeId));
-      // var bounds = event.bounds;
 
       this.takePicture();
       }
+  }
+
+  // Push Notifications
+  registerPushNotifications() {
+    PushNotification.configure({
+
+      // (optional) Called when Token is generated (iOS and Android)
+      onRegister: function(token) {
+        const deviceToken = token.token;
+        // Assign device type based on OS
+        var deviceType = "";
+        if (Platform.OS === 'ios') {
+          deviceType = 'ios';
+        } else if (Platform.OS === 'android') {
+          deviceType = 'android';
+        }
+
+        registerPushInstallation(deviceToken, deviceType);
+      },
+
+      // (required) Called when a remote or local notification is opened or received
+      onNotification: function(notification) {
+        console.log('Received Notification:', notification);
+        console.log('Message:', notification.message);
+      },
+
+      // ANDROID ONLY: GCM Sender ID (optional - not required for local notifications, but is need to receive remote push notifications)
+      senderID: "655020961532",
+
+      // IOS ONLY (optional): default: all - Permissions to register.
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true
+      },
+
+      // Should the initial notification be popped automatically
+      // default: true
+      popInitialNotification: true,
+
+      /**
+      * (optional) default: true
+      * - Specified if permissions (ios) and token (android and ios) will requested or not,
+      * - if not, you must call PushNotificationsHandler.requestPermissions() later
+      */
+      requestPermissions: true,
+    });
   }
 
   takePicture() {
