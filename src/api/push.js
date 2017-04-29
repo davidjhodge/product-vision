@@ -17,7 +17,8 @@ export function registerPushInstallation(deviceToken, deviceType) {
 }
 
 export function scheduleNotification(productTitle) {
-  const epochTime = new Date(Date.now() + (5*100));
+  // 5 seconds for debugging purposes. This will be 1 week in production
+  const epochTime = new Date(Date.now() + (5*1000));
   const isoString = epochTime.toISOString();
   console.log(epochTime);
   var query = new Parse.Query(Parse.Installation);
