@@ -18,6 +18,8 @@ import ProductComponent from './ProductComponent.js';
 
 var Parse = require('parse/react-native');
 
+import { scheduleNotification } from '../api/push.js';
+
 class RelatedProductsComponent extends Component {
   constructor(props) {
     super(props);
@@ -119,6 +121,12 @@ class RelatedProductsComponent extends Component {
     search.set("relatedProducts", relatedProducts);
 
     search.save();
+
+    // Schedule Push Notification Reminder about this product
+    if (relatedProducts && relatedProducts.length > 0) {
+      const firstProductTitle = relatedProducts[0].title;
+      scheduleNotification(firstProductTitle);
+    }
   }
 
   render() {
