@@ -32,14 +32,17 @@ export function registerInstallation(data) {
         },
         body: JSON.stringify(data)
     })
-    .then((status) => {
-      // Process Status
-      console.log(JSON.stringify(status));
+    .then(response => {
+        if (!response.ok) {
+          throw response;
+        }
+        console.log(response.json());
+        return response.json();
     })
-    .then((result) => {
-      // Get Result
-      console.log(JSON.stringify(result));
-    })
+    // .then((result) => {
+    //   // Get Result
+    //   console.log(JSON.stringify(result));
+    // })
     .catch((error) => {
       console.error(error);
     });

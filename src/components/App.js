@@ -18,28 +18,10 @@ import Transitions from '../lib/transitions.js';
 // Initialize Parse
 var Parse = require('parse/react-native');
 Parse.initialize("pqjygx3eAiWlqKGyvD58yDNOhmnb2URbAtjIAajj", "Hk5fRaxZKZYGI58bSWJnTVkEsET0ppWveAEMljIk");
+Parse.masterKey = "vorb886n7VBoODLtWl6GZPV0thVPHmPCi974LBL2";
 Parse.serverURL = "https://parseapi.back4app.com/";
 
-// Push Notifications
-// var PushNotification = require('react-native-push-notification');
-import PushNotification from 'react-native-push-notification';
-// PushNotification.localNotificationSchedule({
-//   message: "My Notification Message", // (required)
-//   date: new Date(Date.now() + (5 * 1000)) // in 60 secs
-// });
-
-import { registerInstallation, scheduleNotification } from '../lib/parseInstallation.js';
-
-
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.registerPushNotifications();
-
-    // TEMP
-    scheduleNotification("Your most recent item is on sale!");
-  }
   // Given a route name, renderScene selects the corresponding component
   renderScene(route, navigator) {
     if (route.name === 'Signup') {
@@ -81,56 +63,6 @@ class App extends Component {
     return Navigator.SceneConfigs.PushFromRight;
   }
 
-  // Push Notifications
-  registerPushNotifications() {
-    PushNotification.configure({
-
-      // (optional) Called when Token is generated (iOS and Android)
-      onRegister: function(token) {
-        console.log( 'TOKEN:', token );
-        // Assign device type based on OS
-        var deviceType = "";
-        if (Platform.OS === 'ios') {
-          deviceType = 'ios';
-        } else if (Platform.OS === 'android') {
-          deviceType = 'android';
-        }
-
-        registerInstallation({
-         "deviceType": deviceType,
-         "deviceToken": token,
-         "channels": ["global"]
-     });
-      },
-
-      // (required) Called when a remote or local notification is opened or received
-      onNotification: function(notification) {
-        console.log( 'Received Notification:', notification );
-      },
-
-      // ANDROID ONLY: GCM Sender ID (optional - not required for local notifications, but is need to receive remote push notifications)
-      senderID: "655020961532",
-
-      // IOS ONLY (optional): default: all - Permissions to register.
-      permissions: {
-        alert: true,
-        badge: true,
-        sound: true
-      },
-
-      // Should the initial notification be popped automatically
-      // default: true
-      popInitialNotification: true,
-
-      /**
-      * (optional) default: true
-      * - Specified if permissions (ios) and token (android and ios) will requested or not,
-      * - if not, you must call PushNotificationsHandler.requestPermissions() later
-      */
-      requestPermissions: true,
-    });
-  }
-
   render() {
     // var initialRoute = {};
     // if (Parse.User.current() !== null) {
@@ -151,13 +83,6 @@ class App extends Component {
     );
   }
 }
-
-// <Navigator
-//   initialRoute={routes[0]}
-//   initialRouteStack={routes}
-//   renderScene={(route, navigator) =>
-//   }
-// />
 
 const styles = StyleSheet.create({
   container: {

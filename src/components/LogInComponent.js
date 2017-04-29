@@ -23,8 +23,8 @@ class LogInComponent extends Component {
     super(props);
 
     this.state = {
-      email: "",
-      password: "",
+      email: "dhodge416@gmail.com",
+      password: "password",
     };
   }
 
@@ -72,7 +72,7 @@ class LogInComponent extends Component {
           style={styles.loginInput}
           placeholder = 'Email'
           onChangeText = {(email) => this.setState({email})}
-          value = {this.state.text}/>
+          value = {this.state.email}/>
         <TextInput
           id = 'Password'
           style={styles.loginInput}
