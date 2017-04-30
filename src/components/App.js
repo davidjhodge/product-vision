@@ -22,6 +22,18 @@ Parse.masterKey = "vorb886n7VBoODLtWl6GZPV0thVPHmPCi974LBL2";
 Parse.serverURL = "https://parseapi.back4app.com/";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    // Intialize Facebook
+    // Parse.FacebookUtils.init({ // this line replaces FB.init({
+    //   appId      : '131430720728943', // Facebook App ID
+    //   status     : true,  // check Facebook Login status
+    //   cookie     : true,
+    //   xfbml      : true,  // initialize Facebook social plugins on the page
+    //   version    : 'v2.8' // point to the latest Facebook Graph API version
+    // });
+  }
   // Given a route name, renderScene selects the corresponding component
   renderScene(route, navigator) {
     if (route.name === 'Signup') {
