@@ -129,6 +129,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
+
     compile project(':react-native-push-notification')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-camera')

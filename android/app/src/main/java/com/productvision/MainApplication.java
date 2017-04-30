@@ -41,7 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new RCTCameraPackage(),
               new FBSDKPackage(mCallbackManager),
-            new ReactNativePushNotificationPackage(),
+            new ReactNativePushNotificationPackage()
       );
     }
   };

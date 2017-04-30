@@ -39,7 +39,6 @@ class SignUpComponent extends Component {
   }
 
   signUp() {
-    alert("Email: \n" + this.state.email + "\n\nPassword: \n" + this.state.password);
     //Example Parse Query
     var user = new Parse.User();
     user.set("username", this.state.email);
@@ -117,7 +116,7 @@ class SignUpComponent extends Component {
             <Text style = {styles.facebookConnectButtonText}>Connect with Facebook</Text>
           </TouchableHighlight>
           <LoginButton
-          publishPermissions={["publish_action"]}
+          publishPermissions={["publish_actions"]}
           onLoginFinished={
             (error, result) => {
               if (error) {
@@ -127,13 +126,35 @@ class SignUpComponent extends Component {
               } else {
                 AccessToken.getCurrentAccessToken().then(
                   (data) => {
-                    alert(data.accessToken.toString())
+                    let authData = {
+                      id: data.userID,
+                      access_token: data.accessToken.toString(),
+                      expiration_date: data.expirationTime,
+                    }
+                    Parse.FacebookUtils.logIn(authData, {
+                      success: function(user) {
+                        if (!user.existed()) {
+                          alert("User signed up and logged in through Facebook!");
+                          //I tried a few different ways to navigate to the camera, but couldn't figure out the right one
+                          //navigateToCamera();
+                        } else {
+                          alert("User logged in through Facebook!");
+                          //I tried a few different ways to navigate to the camera, but couldn't figure out the right one
+                          //navigateToCamera();
+                        }
+                      },
+                      error: function(user, error) {
+                        console.log(user,error);
+                        alert("User cancelled the Facebook login or did not fully authorize.");
+                      }
+                    });
                   }
                 )
               }
             }
           }
-          onLogoutFinished={() => alert("logout.")}/>
+          onLogoutFinished={() => alert("logout.")}
+          style = {styles.facebookConnectButton}/>
           <Text style = {styles.termsText}>By signing up, you agree to our terms</Text>
         </View>
       );
