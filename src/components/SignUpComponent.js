@@ -1,5 +1,17 @@
 // Import this line in every React component
 import React, { Component } from 'react';
+
+//const FBSDK = require('react-native-fbsdk');
+// import FBSDK from 'react-native-fbsdk'
+// const {
+//   LoginButton,
+//   AccessToken
+// } = FBSDK;
+import {
+  LoginButton,
+  AccessToken,
+} from 'react-native-fbsdk';
+
 // Import different modules from the react-native package
 import {
   AppRegistry,
@@ -119,6 +131,24 @@ class SignUpComponent extends Component {
             onPress = {this.facebookLogin.bind(this)}>
             <Text style = {styles.facebookConnectButtonText}>Connect with Facebook</Text>
           </TouchableHighlight>
+          <LoginButton
+          publishPermissions={["publish_action"]}
+          onLoginFinished={
+            (error, result) => {
+              if (error) {
+                alert("login has error: " + result.error);
+              } else if (result.isCancelled) {
+                alert("login is cancelled.");
+              } else {
+                AccessToken.getCurrentAccessToken().then(
+                  (data) => {
+                    alert(data.accessToken.toString())
+                  }
+                )
+              }
+            }
+          }
+          onLogoutFinished={() => alert("logout.")}/>
           <Text style = {styles.termsText}>By signing up, you agree to our terms</Text>
         </View>
       );
@@ -144,7 +174,6 @@ titleText: {
   color: '#ffffff',
   fontWeight: '600',
   letterSpacing: -0.4,
-  marginBottom: 12
 },
 subtitleText: {
   fontSize: 16,
