@@ -56,6 +56,21 @@ class SignUpComponent extends Component {
     });
   }
 
+  facebookLogin() {
+    Parse.FacebookUtils.logIn(null, {
+      success: function(user) {
+        if (!user.existed()) {
+          alert("User signed up and logged in through Facebook!");
+        } else {
+          alert("User logged in through Facebook!");
+        }
+      },
+      error: function(user, error) {
+        alert("User cancelled the Facebook login or did not fully authorize.");
+      }
+    });
+  }
+
   navigateToCamera() {
     // Navigator is passed in as a prop in the App.js component
     this.props.navigator.push({
@@ -108,12 +123,6 @@ class SignUpComponent extends Component {
             underlayColor="transparent"
             onPress = {this.navigateToLogin.bind(this)}>
             <Text style = {styles.existingLoginButtonText}>Login to an existing account</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style = {styles.facebookConnectButton}
-            underlayColor="#2C457B"
-            onPress = {this.navigateToCamera.bind(this)}>
-            <Text style = {styles.facebookConnectButtonText}>Connect with Facebook</Text>
           </TouchableHighlight>
           <LoginButton
           publishPermissions={["publish_actions"]}
