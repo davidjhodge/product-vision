@@ -125,13 +125,13 @@ class SignUpComponent extends Component {
             <Text style = {styles.existingLoginButtonText}>Login to an existing account</Text>
           </TouchableHighlight>
           <LoginButton
-          publishPermissions={["publish_actions"]}
           onLoginFinished={
             (error, result) => {
+              var self = this;
               if (error) {
-                alert("login has error: " + result.error);
+                alert("Facebook Login Error: " + result.error);
               } else if (result.isCancelled) {
-                alert("login is cancelled.");
+                console.log("login is cancelled.");
               } else {
                 AccessToken.getCurrentAccessToken().then(
                   (data) => {
@@ -143,18 +143,19 @@ class SignUpComponent extends Component {
                     Parse.FacebookUtils.logIn(authData, {
                       success: function(user) {
                         if (!user.existed()) {
-                          alert("User signed up and logged in through Facebook!");
+                          console.log("User signed up and logged in through Facebook!");
                           //I tried a few different ways to navigate to the camera, but couldn't figure out the right one
                           //navigateToCamera();
                         } else {
-                          alert("User logged in through Facebook!");
+                          console.log("User logged in through Facebook!");
                           //I tried a few different ways to navigate to the camera, but couldn't figure out the right one
                           //navigateToCamera();
                         }
+                        self.navigateToCamera();
                       },
                       error: function(user, error) {
                         console.log(user,error);
-                        alert("User cancelled the Facebook login or did not fully authorize.");
+                        console.log("User cancelled the Facebook login or did not fully authorize.");
                       }
                     });
                   }

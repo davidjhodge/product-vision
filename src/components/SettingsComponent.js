@@ -17,6 +17,11 @@ import {
 var Parse = require('parse/react-native');
 import NavigationBar from 'react-native-navbar';
 
+const FBSDK = require('react-native-fbsdk');
+const {
+  LoginManager,
+} = FBSDK;
+
 class SettingsComponent extends Component {
   constructor(props) {
     super(props);
@@ -30,6 +35,9 @@ class SettingsComponent extends Component {
   }
 
   logout() {
+    if (Parse.User.current().attributes.authData.facebook != null) {
+      LoginManager.logOut();
+    }
     Parse.User.logOut();
     this.props.navigator.pop();
 
