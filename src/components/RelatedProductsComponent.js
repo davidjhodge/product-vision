@@ -84,7 +84,8 @@ class RelatedProductsComponent extends Component {
     this.props.navigator.push({
       name: 'WebView',
       passProps: {
-        url: url
+        url: url,
+        pageTitle: "Product Webpage"
       },
       type: 'Normal'
     });
@@ -123,10 +124,10 @@ class RelatedProductsComponent extends Component {
     search.save();
 
     // Schedule Push Notification Reminder about this product
-    if (relatedProducts && relatedProducts.length > 0) {
-      const firstProductTitle = relatedProducts[0].title;
-      scheduleNotification(firstProductTitle);
-    }
+    // if (relatedProducts && relatedProducts.length > 0) {
+    //   const firstProductTitle = relatedProducts[0].title;
+    //   scheduleNotification(firstProductTitle);
+    // }
   }
 
   render() {

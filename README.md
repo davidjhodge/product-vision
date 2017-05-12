@@ -1,20 +1,27 @@
 # ProductVision
+By David Hodge and Matthew Smith
+CSCE 590 Final Project
+
 Product Vision uses barcode scanning to find similar items from other retailers. Built with ReactNative.
 
--- David's Notes --
+-- Running the App --
 
-First and foremost, get ReactNative [set up](https://facebook.github.io/react-native/docs/getting-started.html).
+To run the app on iOS, use iTunes to install the .ipa file onto your device.
 
-To run the project on ios,
-```
-react-native run-ios
-```
+http://stackoverflow.com/questions/26720764/install-ipa-with-itunes-12
 
-To run on android,
-```
-react-native run-android
-```
 
-All of the source code is contained in the **src folder**.
+To run the app on Android, follow the guide at the link below to install the .apk file onto your device. Note that I haven't tested this but it should work.
 
-No need to edit anything directly in the android or ios folder.
+http://www.wikihow.tech/Install-APK-Files-on-Android
+
+
+-- The Source Code --
+
+The ios and android project folders have not been included in the submission. Thus, the app cannot be built from source. Thus, .ipa and .apk files are included to run the app on iOS and Android.
+
+The entire project with these folders included is ~600MB, so they have been omitted.
+
+** IF YOU WOULD LIKE TO BUILD THE APP FROM SOURCE, PLEASE EMAIL dhodge@email.sc.edu, AND I WILL FIGURE OUT A WAY TO GET YOU THE ENTIRE PROJECT FOLDER.
+
+Other than that, the actual code we wrote is included in the src folder.

@@ -29,9 +29,13 @@ class SettingsComponent extends Component {
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: this.ds.cloneWithRows([
+        "Affiliate Disclosure",
+        "Privacy",
         "Logout"
       ])
     };
+
+    this.renderRow = this.renderRow.bind(this);
   }
 
   logout() {
@@ -51,6 +55,52 @@ class SettingsComponent extends Component {
     this.props.navigator.pop();
   }
 
+  openWebpage(url, title) {
+    this.props.navigator.push({
+      name: 'WebView',
+      passProps: {
+        url: url,
+        pageTitle: title
+      },
+      type: 'Normal'
+    });
+  }
+
+  renderRow(rowData) {
+
+    switch(rowData) {
+      case "Affiliate Disclosure":
+        return (
+          <TouchableHighlight
+            underlayColor="#c8c8c8"
+            style={styles.firstCell}
+            onPress={this.openWebpage.bind(this, "https://sites.google.com/view/productvision/affiliate-disclosure", rowData)}>
+            <Text style={styles.rowText}>{rowData}</Text>
+          </TouchableHighlight>
+        );
+
+      case "Privacy":
+        return (
+          <TouchableHighlight
+            underlayColor="#c8c8c8"
+            style={styles.cell}
+            onPress={this.openWebpage.bind(this, "https://sites.google.com/view/productvision/privacy", rowData)}>
+            <Text style={styles.rowText}>{rowData}</Text>
+          </TouchableHighlight>
+        );
+
+      case "Logout":
+        return (
+          <TouchableHighlight
+            underlayColor="#c8c8c8"
+            style={styles.firstCell}
+            onPress={this.logout.bind(this)}>
+            <Text style={styles.rowText}>{rowData}</Text>
+          </TouchableHighlight>
+        );
+    }
+  }
+
   render() {
     const leftButtonConfig = {
       title: 'Cancel',
@@ -68,17 +118,9 @@ class SettingsComponent extends Component {
           leftButton={leftButtonConfig} />
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={(rowData) => {
-            return (
-              <TouchableHighlight
-                underlayColor="#c8c8c8"
-                style={styles.logout}
-                onPress={this.logout.bind(this)}>
-                <Text style={styles.rowText}>{rowData}</Text>
-              </TouchableHighlight>
-            );
-          }}
+          renderRow={this.renderRow}
           enableEmptySections={true}
+          removeClippedSubviews={false}
         />
       </View>
     );
@@ -94,7 +136,17 @@ const styles = StyleSheet.create({
   navBar: {
     width: '100%'
   },
-  logout: {
+  cell: {
+    height: 44,
+    width: '100%',
+    backgroundColor: 'white',
+    marginTop: 0,
+    borderBottomColor: '#c8c8c8',
+    borderBottomWidth: 1 / PixelRatio.get(),
+    borderTopColor: '#c8c8c8',
+    borderTopWidth: 1 / PixelRatio.get(),
+  },
+  firstCell: {
     height: 44,
     width: '100%',
     backgroundColor: 'white',

@@ -39,7 +39,7 @@ class CameraComponent extends Component {
 
     this.onBarcodeDetection = this.onBarcodeDetection.bind(this);
 
-    this.registerPushNotifications();
+    // this.registerPushNotifications();
   }
 
   onBarcodeDetection(event) {

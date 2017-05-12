@@ -16,7 +16,7 @@ class ProductWebComponent extends Component {
   }
 
   render() {
-    const { url } = this.props;
+    const { url, pageTitle } = this.props;
 
     const leftButtonConfig = {
       title: 'Back',
@@ -27,7 +27,7 @@ class ProductWebComponent extends Component {
       <View style={styles.container}>
         <NavigationBar
           style={styles.navBar}
-          title={{ title: 'Product Webpage' }}
+          title={{ title: pageTitle }}
           leftButton={leftButtonConfig} />
         <WebView
           source={{ uri: url}}
@@ -50,9 +50,13 @@ const styles = StyleSheet.create({
   }
 });
 
-
 ProductWebComponent.propTypes = {
-  url: React.PropTypes.string.isRequired
+  url: React.PropTypes.string.isRequired,
+  pageTitle: React.PropTypes.string,
+};
+
+ProductWebComponent.defaultProps = {
+  pageTitle: "Webpage"
 };
 
 export default ProductWebComponent;
